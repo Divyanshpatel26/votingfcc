@@ -1,0 +1,29 @@
+{
+  "name": "ng-progress",
+  "version": "0.2.1",
+  "authors": [
+    "Christoph Hartmann"
+  ],
+  "description": "A collection of progress indicators animated with CSS",
+  "keywords": [
+    "css",
+    "scss",
+    "web"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules"
+  ],
+  "homepage": "https://github.com/sessionbird/ng-progress",
+  "_release": "0.2.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.2.1",
+    "commit": "cdf0d19d4878fee1a0898a36bc2ff13f56e2e24d"
+  },
+  "_source": "https://github.com/sessionbird/ng-progress.git",
+  "_target": "^0.2.1",
+  "_originalSource": "ng-progress",
+  "_direct": true
+}

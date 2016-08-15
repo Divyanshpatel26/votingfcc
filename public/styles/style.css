@@ -1,0 +1,14 @@
+footer{
+    padding:20px;
+    background-color:white;
+    text-align:center;
+    height:30%;
+    border-top:2px solid black;
+    display:block;
+}
+.content{
+    padding:60px;
+}
+header{
+    background-color:lightblue;
+}
