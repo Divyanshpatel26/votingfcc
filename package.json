@@ -4,19 +4,19 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "angular-chart.js": "^1.0.2",
     "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
+    "chart.js": "^2.2.1",
     "express": "^4.14.0",
     "jwt-simple": "^0.5.0",
+    "mongodb": "^2.2.6",
     "mongoose": "^4.5.9",
     "node-restful": "^0.2.5",
     "passport": "^0.3.2",
     "passport-jwt": "^2.1.0"
   },
   "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/computerluca/votingfcc.git"

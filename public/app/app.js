@@ -1,5 +1,5 @@
 
-var app = angular.module('votingfcc', ['usermodule','ngResource','ui.router','pascalprecht.translate']);
+var app = angular.module('votingfcc', ['usermodule','pollmodule','translate','ngResource','ui.router','ngProgress','chart.js']);
 app.constant('AUTH_EVENTS', {
   notAuthenticated: 'auth-not-authenticated'
 })
@@ -65,7 +65,36 @@ app.config(function ($httpProvider,$stateProvider, $urlRouterProvider,$translate
 			
 			
 		})
-	
+		.state('app.newpoll',{
+		  url:'new/poll',
+		  views:{
+		    'content@':{
+		      templateUrl:'views/newpoll.html',
+		      controller:'NewPollCtrl'
+		    }
+		  }
+		  
+		})
+		.state('app.my',{
+		  url:'my',
+		  views:{
+		    'content@':{
+		      templateUrl:'views/mypolls.html',
+		      controller:'MyCtrl'
+		    }
+		  }
+		  
+		})
+		.state('app.view',{
+		  
+		  url:'poll/view/:id',
+		  views:{
+		    'content@':{
+		      templateUrl:'views/poll.html',
+		      controller:'PollViewController'
+		    }
+		  }
+		})
 	
 	
 	
@@ -77,38 +106,21 @@ app.config(function ($httpProvider,$stateProvider, $urlRouterProvider,$translate
   
   
   
-     $translateProvider.translations('it', {
-		'HOME':'Pagina iniziale',
-		'LIST':'Lista fatture',
-		'CONTACT':'Contattaci',
-    'USERNULL': 'Il campo utente non è valorizzato',
-    'MAILNULL': 'Il campo mail non è valorizzato',
-    'MSGNULL':'Il campo messaggio non è valorizzato',
     
-  });
- 
-  $translateProvider.translations('en', {
-	  'HOME':"Home page",
-	  'LIST':'Fepa List',
-    'USERNULL': 'User is not specified',
-    'MAILNULL': 'Mail field is not specified',
-    'MSGNULL':'Message field is not specified',
-    'CONTACT':'Contact Us'
-  });
-    $translateProvider.fallbackLanguage('it');
- 
-$translateProvider.preferredLanguage("it");
-$translateProvider.useSanitizeValueStrategy('escape');
 
 });
+
+/* JWT autentication inspired by https://devdactic.com/restful-api-user-authentication-1/ */
 app.factory('myHttpInterceptor', function ($q) {
     return {
         responseError: function (response) {
           if(response.data){
             if(response.data.message)
-           alert( response.data.message);
+           alert(response.data.message);
             else
-            alert(response.data);
+            if(response.data.msg){
+            alert(response.data.msg);
+            }
           }
           return $q.reject(response);
         }
@@ -163,6 +175,7 @@ app.service('AuthService', function($q, $http, API_ENDPOINT) {
     return $q(function(resolve, reject) {
       $http.post('authentication/authenticate', user).then(function(result) {
         if (result.data.success) {
+          console.log(result.data.token);
           storeUserCredentials(result.data.token);
           resolve(result.data.msg);
         } else {
@@ -185,7 +198,37 @@ app.service('AuthService', function($q, $http, API_ENDPOINT) {
     isAuthenticated: function() {return isAuthenticated;},
   };
 })
- 
+ app.factory('PollService',['$q','$http','AuthService', function($q,$http,AuthService){
+   var newpoll = function(poll) {
+    return $q(function(resolve, reject) {
+      $http.post('api/poll/new', poll).then(function(result) {
+        if (result.data.success) {
+          resolve(result.data.msg);
+        } else {
+          reject(result.data.msg);
+        }
+      });
+    });
+    
+  };
+  var getpolls = function(user) {
+    return $q(function(resolve, reject) {
+      var username = '/api/poll/username/'+user.username;
+      console.log(user.username);
+      $http.get(username).then(function(result) {
+        if (result.data.success) {
+          resolve(result.data.msg);
+        } else {
+          reject(result.data.msg);
+        }
+      });
+    });
+  };
+return {
+    newpoll:newpoll,
+    getpolls:getpolls
+}
+}]);
 app.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
   return {
     responseError: function (response) {
@@ -196,7 +239,17 @@ app.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
     }
   };
 });
-
- 
-
- 
+/*
+app.run(function ($rootScope, $state, AuthService, AUTH_EVENTS) {
+  $rootScope.lista_dg_aperti = [];
+  $rootScope.$on('$stateChangeStart', function (event,next, nextParams, fromState) {
+     $rootScope.lista_dg_aperti.push(next.name);
+      console.log($rootScope.lista_dg_aperti);
+    if (!AuthService.isAuthenticated()) {
+     
+      if (next.name !== 'app.login' && next.name !== 'app.register') {
+        event.preventDefault();
+      }
+    }
+  });
+});*/

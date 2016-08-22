@@ -7,8 +7,11 @@ footer{
     display:block;
 }
 .content{
-    padding:60px;
+    padding:100px;
+    color:black;
 }
-header{
-    background-color:lightblue;
+
+header button{
+    padding:5px;
+
 }

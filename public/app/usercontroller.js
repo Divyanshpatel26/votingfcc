@@ -13,10 +13,7 @@ angular.module('usermodule',[])
        $scope.logout=AuthService.logout;
        
     
-    if(!($scope.isLoggedIn())){
-			$state.go("app.login");
-		
-	}
+   
     }]);
 
 
@@ -25,21 +22,32 @@ app.controller('LoginCtrl', function($scope, AuthService, $state,$http) {
     name: '',
     password: ''
   };
+    $scope.isLoggedIn = AuthService.isAuthenticated;
+       $scope.logout=AuthService.logout;
+       
+    
+    if(($scope.isLoggedIn())){
+			$state.go("app.my");
+			
+	 $http.get('/authentication/memberinfo').then(function(result) {
+      $scope.memberinfo = result.data.msg;
+      $("#memberinfo").text($scope.memberinfo);
+  });
+	}
   $scope.login=function(){
+    
 	  AuthService.login($scope.user)
 	  .then(function(msg) {
- $http.get('/memberinfo').then(function(result) {
-     console.log("merda");
+ $http.get('/authentication/memberinfo').then(function(result) {
       $scope.memberinfo = result.data.msg;
+      $("#memberinfo").text($scope.memberinfo);
   });
   
       }, function(errMsg) {
       alert(errMsg);
 	 
 });
-    if(AuthService.isAuthenticated()){
-        console.log('ciao');
-    }
+    
 
   
 }
@@ -50,8 +58,8 @@ app.controller('RegisterCtrl', function($scope, AuthService, $state) {
     name: '',
     password: ''
   };
-    if(AuthService.isAuthenticated()){
-      $state.go('app');
+  if(AuthService.isAuthenticated()){
+      $state.go('app.my');
     }
   $scope.signup = function() {
     AuthService.register($scope.user)
@@ -59,7 +67,7 @@ app.controller('RegisterCtrl', function($scope, AuthService, $state) {
 		alert("Effettua il login ora per accedere ai contenuti del sito");
 	  $state.go('app.login');
   }), function(errMsg) {
-      alert("Registration failed"+errMsg);
+    console.log(errMsg);
 	}
 };
 });
