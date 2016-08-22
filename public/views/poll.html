@@ -1,22 +1,26 @@
 <div class="content">
-    <h1>{{poll[0].name}}</h1>
+    <h1>Title of the poll => {{poll[0].name}}</h1>
     
-    <h2>{{poll[0].description}}</h2>
+    <h2>Description => {{poll[0].description}}</h2>
+    <h3>Author => {{poll[0].username}}</h3>
     <div>
         <div ng-repeat = "option in options">
            <label>{{option.text}}</label> <input type="radio" name="option" ng-model ="$parent.choice" ng-value="option.name" />
             
             
         </div>
-        <button ng-if="isLoggedIn()" ng-click="add_option()">Add option</button>
-
-        <button ng-click="vota()">Vota</button>
+        <button class="btn btn-lg" ng-if="isLoggedIn()" ng-click="add_option()">Add option</button>
+        <div ng-show="visible==true"><input type="text" name="new_option" required placeholder="You can add a new option here" ng-model="new_option" />
+        <button class="btn btn-sm" ng-click="confirm_new_option()">Confirm new option</button></div>
         
-        <a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
-<button ng-click="condividi()">Condivi con Twitter </button>
+        <button class="btn btn-lg" ng-click="vota()">Vote</button>
+        
+<button class="btn btn-lg" ng-click="condividi()">Share via Twitter</button>
 
     
 </div>
+<span style="height:100px"></span>
+<h2>Result of the poll is updated automatically</h2>
 <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" chart-series="series">
 </canvas>
 

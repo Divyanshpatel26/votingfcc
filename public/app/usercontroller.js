@@ -11,8 +11,12 @@ angular.module('usermodule',[])
       };
        $scope.isLoggedIn = AuthService.isAuthenticated;
        $scope.logout=AuthService.logout;
-       
-    
+       if($scope.isLoggedIn()){
+       $http.get('/authentication/memberinfo').then(function(result) {
+      $scope.memberinfo = result.data.msg;
+      $("#memberinfo").text($scope.memberinfo);
+  });
+       }
    
     }]);
 
@@ -23,7 +27,6 @@ app.controller('LoginCtrl', function($scope, AuthService, $state,$http) {
     password: ''
   };
     $scope.isLoggedIn = AuthService.isAuthenticated;
-       $scope.logout=AuthService.logout;
        
     
     if(($scope.isLoggedIn())){
@@ -34,6 +37,11 @@ app.controller('LoginCtrl', function($scope, AuthService, $state,$http) {
       $("#memberinfo").text($scope.memberinfo);
   });
 	}
+	$scope.logout=function(){
+	         AuthService.logout;
+	         $state.go("/");
+
+	}
   $scope.login=function(){
     
 	  AuthService.login($scope.user)
@@ -41,6 +49,7 @@ app.controller('LoginCtrl', function($scope, AuthService, $state,$http) {
  $http.get('/authentication/memberinfo').then(function(result) {
       $scope.memberinfo = result.data.msg;
       $("#memberinfo").text($scope.memberinfo);
+      $state.go("app.my");
   });
   
       }, function(errMsg) {

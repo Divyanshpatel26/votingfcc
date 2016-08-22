@@ -95,7 +95,15 @@ app.config(function ($httpProvider,$stateProvider, $urlRouterProvider,$translate
 		    }
 		  }
 		})
-	
+	.state('app.allpolls',{
+	  url:'poll/all',
+	  views:{
+	    'content@':{
+	      templateUrl:'views/allpolls.html',
+	      controller:'AllPollsController'
+	    }
+	  }
+	})
 	
 	
 		

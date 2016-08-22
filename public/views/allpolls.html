@@ -1,0 +1,22 @@
+<div class="content">
+    
+    <table class="table">
+            <thead>
+            <th>Name
+            </th>
+            <th>Description</th>
+            <th>View</th>
+
+            </thead>
+            <tbody>
+                <tr ng-repeat="poll in polls">
+                <td>{{poll.name}}</td>
+                <td>{{poll.description}}</td>
+                <td><a ui-sref="app.view({id: poll._id})">View</a></td>
+                </tr>
+            </tbody>
+            </table>
+    
+    
+    
+</div>
