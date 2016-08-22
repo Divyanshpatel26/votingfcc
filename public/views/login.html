@@ -1,12 +1,30 @@
 <div class="content">
   <h3>Login Page</h3>
-      <label>Username
-        <input type="text" placeholder="Name" ng-model="user.name">
-      </label>
-      <label>Password
-        <input type="password" placeholder="Password" ng-model="user.password">
-      </label>
-    <button ng-click="login()">
-      Login
-    </button>
+      <form name = "loginform" novalidate>
+        <div class="row">
+        <div class="col col-lg-2"> <label for="username">Username</label></div>
+        
+        <div class="col col-lg-10"><input name = "username" type = "text" ng-model = "user.name" placeholder = "Username" required>
+                     <span style = "color:red" ng-show = "loginform.username.$dirty && loginform.username.$invalid">
+                        <span ng-show = "loginform.username.$error.required">{{'error.user.name'| translate}}</span>
+                     </span>
+               
+               
+             </div>
+             </div>
+             <div class="row">
+               
+                <div class="col col-lg-2">
+             
+                <label for="password">Password</label>
+                </div>
+                 <div class="col col-lg-10">
+                <input name = "password"  type = "password" ng-model = "user.password" placeholder="Password" required>
+                     <span style = "color:red" ng-show = "loginform.password.$dirty && loginform.password.$invalid">
+                        <span ng-show = "loginform.password.$error.required">{{'error.user.password'| translate}}</span>
+                     </span>
+                     <button  class="btn btn-sm" ng-disabled = "loginform.username.$invalid ||
+                        loginform.password.$invalid" ng-click="login()">Login</button>
+                        </div>
+                        </div>
 </div>

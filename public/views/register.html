@@ -1,10 +1,30 @@
-<div class="content">
-  <h3>Register page</h3>
-      <label>Username
-        <input type="text" placeholder="name" ng-model="user.name" required>
-      </label>
-      <label>Password
-        <input type="password" placeholder="Password" ng-model="user.password" required>
-      </label>
-    <button ng-click="signup()">Register now!</button>
+<div class="content" ng-controller="RegisterCtrl">
+    <h3>Register Page</h3>
+    <form name="registerform" novalidate>
+        <div class="row">
+            <div class="col col-lg-2"> <label for="username">Username</label></div>
+
+            <div class="col col-lg-10"><input name="username" type="text" ng-model="user.name" placeholder="Username" required>
+                <span style="color:red" ng-show="registerform.username.$dirty && registerform.username.$invalid">
+                        <span ng-show = "registerform.username.$error.required">{{'error.user.name'| translate}}</span>
+                </span>
+
+
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col col-lg-2">
+
+                <label for="password">Password</label>
+            </div>
+            <div class="col col-lg-10">
+                <input name="password" type="password" ng-model="user.password" placeholder="Password" required>
+                <span style="color:red" ng-show="registerform.password.$dirty && registerform.password.$invalid">
+                        <span ng-show = "registerform.username.$dirty.password.$error.required">{{'error.user.password'| translate}}</span>
+                </span>
+                <button class="btn btn-sm" ng-disabled="registerform.username.$invalid ||
+                        registerform.password.$invalid" ng-click="signup()">Register</button>
+            </div>
+        </div>
 </div>

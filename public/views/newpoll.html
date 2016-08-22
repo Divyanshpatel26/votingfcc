@@ -1,0 +1,42 @@
+<div class="content">
+    <h3>Create A New Poll</h3>
+    <form name="newpollform" novalidate>
+        <div class="row">
+            <div class="col col-lg-2"> <label for="name">Name</label></div>
+
+            <div class="col col-lg-10"><input name="name" type="text" ng-model="poll.name" placeholder="Name of the poll" required>
+                <span style="color:red" ng-show="newpollform.name.$dirty && newpollform.name.$invalid">
+                        <span ng-show = "newpollform.name.$error.required">{{'error.newpoll.name'| translate}}</span>
+                </span>
+
+
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col col-lg-2">
+
+                <label for="description">Description</label>
+            </div>
+            <div class="col col-lg-10">
+                <textarea name="description" ng-model="poll.description" placeholder="Insert the description of the poll" required></textarea>
+                     <span style = "color:red" ng-show = "newpollform.description.$dirty && newpollform.description.$invalid">
+                        <span ng-show = "newpollform.description.$error.required">{{'error.newpoll.description'| translate}}</span>
+                     </span>
+                     
+                     
+                        </div>
+                        </div>
+    </form>
+
+        <div class="row">
+            <div class=""
+        <ul>
+    <li ng-repeat="option in poll.answers"><input type="text" name="{{option.name}}" ng-model="option.text"/></li>
+</ul>
+        <button ng-click="addInput()">Add option</button>
+        <button  class="btn btn-sm" ng-disabled = "newpollform.name.$invalid ||
+                        newpollform.description.$invalid" ng-click="newPoll()">Create</button>
+        
+        </div>
+</div>
