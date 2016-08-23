@@ -52,6 +52,18 @@ pollrouter.get("/poll/username/:username",passport.authenticate('jwt',{session:f
     return res.status("403").send({success:false,msg:"No token provided"})
   }
 })
+pollrouter.patch("/poll/addoption/:id",function(req,res){
+  Poll.findById(req.params.id,function(err,tank){
+    if(err) throw err;
+    var option = req.body.option;
+    tank.answers.push(option);
+    tank.markModified("answers");
+    tank.save(function(err){
+      if(err) throw err;
+      res.send(tank);
+    })
+  });
+})
 pollrouter.patch("/poll/vota/:id",function(req,res){
  Poll.findById(req.params.id, function (err, tank) {
   if (err) throw(err);
@@ -80,21 +92,12 @@ Poll.find({"_id":req.params.id}, function (err, user) {
 
     });
 })
-pollrouter.get("/poll/get",passport.authenticate('jwt',{session:false}),function(req,res){
-  var token = getToken(req.headers);
-    
-
-  if(token){
+pollrouter.get("/poll/get",function(req,res){
     Poll.find({},function(err,data){
       if(err) throw err;
           return res.status('200').send({success:true,msg:data});
 
     });
-  }
-  else
-  {
-    return res.status("403").send({success:false,msg:"No token provided"})
-  }
 })
 pollrouter.post("/poll/new",passport.authenticate('jwt', {session: false}),function(req,res){
  var token = getToken(req.headers);
@@ -197,6 +200,6 @@ app.use('/api', pollrouter);
 // Start server
 var port = 8080
 , ip = '0.0.0.0'
-app.listen(port, ip, function() {
+app.listen(process.env.PORT, ip, function() {
   console.log('Express server listening on %d', port);
 });
