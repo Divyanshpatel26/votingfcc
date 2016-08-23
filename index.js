@@ -4,14 +4,14 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var bodyParser = require('body-parser');
 var ObjectId = require('mongoose').ObjectId;
+require('dotenv').config();
 // MongoDB
-var config      = require('./config/database');
 var User        = require('./models/user');
 var Poll        = require('./models/poll');
 var port 	      = process.env.PORT || 8080;
 var jwt 			  = require('jwt-simple');
 mongoose.Promise = global.Promise;
-mongoose.connect(config.database);
+mongoose.connect(process.env.database);
 
 // Express
 var app = express();
@@ -163,7 +163,7 @@ authenticationRoutes.post('/authenticate', function(req, res) {
     } else {
       user.comparePassword(req.body.password, function(err, isMatch) {
         if (isMatch && !err) {
-          var token = jwt.encode(user, config.secret);
+          var token = jwt.encode(user, process.env.secret);
           console.log(token);
           res.json({success: true, token: 'JWT ' + token});
         } else {
@@ -177,7 +177,7 @@ authenticationRoutes.post('/authenticate', function(req, res) {
 authenticationRoutes.get('/memberinfo', passport.authenticate('jwt', {session: false}), function(req, res) {
   var token = getToken(req.headers);
   if (token) {
-    var decoded = jwt.decode(token, config.secret);
+    var decoded = jwt.decode(token, process.env.secret);
     User.findOne({
       name: decoded.name
     }, function(err, user) {
@@ -200,6 +200,7 @@ app.use('/api', pollrouter);
 // Start server
 var port = 8080
 , ip = '0.0.0.0'
+
 app.listen(process.env.PORT,  function() {
   console.log('Express server listening on %d', port);
 });
