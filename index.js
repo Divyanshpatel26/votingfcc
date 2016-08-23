@@ -200,6 +200,6 @@ app.use('/api', pollrouter);
 // Start server
 var port = 8080
 , ip = '0.0.0.0'
-app.listen(process.env.PORT, ip, function() {
+app.listen(process.env.PORT,  function() {
   console.log('Express server listening on %d', port);
 });
