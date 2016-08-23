@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/computerluca/votingfcc/issues"
   },
-  "homepage": "https://github.com/computerluca/votingfcc#readme"
+  "homepage": "https://github.com/computerluca/votingfcc#readme",
+  "scripts":{
+  "start":"index.js"
+  }
 }
