@@ -1,5 +1,5 @@
 
-var app = angular.module('votingfcc', ['usermodule','pollmodule','translate','ngResource','ui.router','ngProgress','chart.js']);
+var app = angular.module('votingfcc', ['usermodule','pollmodule','translate','ngResource','ui.router','googlechart']);
 app.constant('AUTH_EVENTS', {
   notAuthenticated: 'auth-not-authenticated'
 })

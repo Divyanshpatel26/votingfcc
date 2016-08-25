@@ -3,6 +3,7 @@ angular.module('translate',['pascalprecht.translate'])
 app.config(function($translateProvider){
  $translateProvider.translations('it', {
 		'HOME':'Pagina iniziale',
+		
 		'error.user.name':"Errore! L'username non è valorizzato",
     'error.user.password':"Errrore! La password non è valorizzata",
     "error.newpoll.name":"Errore! Il nome del sondaggio non è valorizzato",
